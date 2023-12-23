@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+  <!--  <rosparam param="/marker_publisher/marker_list"> [11, 12, 13, 15] </rosparam> -->
+
+    <include file="$(find assignment2_exprob)/launch/sim_aruco2.launch"></include>
+    <include file="$(find rosbot_bringup)/launch/rosbot_gazebo.launch"></include>
+
+    
+
+</launch>
+
