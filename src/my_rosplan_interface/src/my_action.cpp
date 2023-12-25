@@ -10,9 +10,10 @@
 
 namespace KCL_rosplan {
 
-MyActionInterface::MyActionInterface(ros::NodeHandle &nh) {
-    // here the initialization
-}
+    MyActionInterface::MyActionInterface(ros::NodeHandle &nh) : nh_(nh) {
+        // Creazione del publisher cmd_vel
+        cmd_vel_pub_ = nh_.advertise<geometry_msgs::Twist>("/cmd_vel", 10);
+    }
 
     bool MyActionInterface::concreteCallback(const rosplan_dispatch_msgs::ActionDispatch::ConstPtr& msg) { // concreteCallback deve avere lo stesso nome in my_action.h
         // here the implementation of the action
@@ -20,6 +21,13 @@ MyActionInterface::MyActionInterface(ros::NodeHandle &nh) {
         //std::cout << "Received message: " << *msg << std::endl;
         if (msg->name == "rotate") {         
             std::cout << "STIAMO FACENDO LA ROTAZIONE ";  
+            
+            geometry_msgs::Twist twist;
+            twist.angular.z = 0.5; // Imposta la velocità angolare desiderata
+            cmd_vel_pub_.publish(twist);
+            
+            sleep(10);
+
         } 
         
         else if (msg->name == "goto_waypoint") {         
@@ -33,26 +41,26 @@ MyActionInterface::MyActionInterface(ros::NodeHandle &nh) {
             
             
             if(msg->parameters[2].value == "wp1"){ 
-                goal.target_pose.pose.position.x = 6.0;
-                goal.target_pose.pose.position.y = 2.0;
+                goal.target_pose.pose.position.x = 5.5;
+                goal.target_pose.pose.position.y = 1.5;
                 goal.target_pose.pose.orientation.w = 0.0;
             }  
              
             else if (msg->parameters[2].value == "wp2"){
-                 goal.target_pose.pose.position.x = 7.0;
-                 goal.target_pose.pose.position.y = -5.0;
+                 goal.target_pose.pose.position.x = 6.1;
+                 goal.target_pose.pose.position.y = -5.8;
                  goal.target_pose.pose.orientation.w = 0.0;
             } 
             
             else if (msg->parameters[2].value == "wp3"){
                  goal.target_pose.pose.position.x = -3.0;
-                 goal.target_pose.pose.position.y = -8.0;
+                 goal.target_pose.pose.position.y = -7.0;
                  goal.target_pose.pose.orientation.w = 0.0;
             } 
             
             else if (msg->parameters[2].value == "wp4"){
                  goal.target_pose.pose.position.x = -7.0;
-                 goal.target_pose.pose.position.y = -1.5;
+                 goal.target_pose.pose.position.y = 2.0;
                  goal.target_pose.pose.orientation.w = 0.0;
             } 
             
@@ -70,7 +78,7 @@ MyActionInterface::MyActionInterface(ros::NodeHandle &nh) {
             ac.waitForServer();
             
             goal.target_pose.pose.position.x = 0.0;
-            goal.target_pose.pose.position.y = -1.0;
+            goal.target_pose.pose.position.y = 1.0;
             goal.target_pose.pose.orientation.w = 0.0; 
             
             ac.sendGoal(goal); 

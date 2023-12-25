@@ -1,10 +1,14 @@
 #include <ros/ros.h>
 #include "rosplan_action_interface/RPActionInterface.h"
+#include <geometry_msgs/Twist.h>
 
 namespace KCL_rosplan {
 
 class MyActionInterface : public RPActionInterface {
 private:
+    ros::NodeHandle nh_;
+    ros::Publisher cmd_vel_pub_;
+
 public:
     /* constructor */
     MyActionInterface(ros::NodeHandle &nh);
