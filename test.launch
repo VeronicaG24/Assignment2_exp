@@ -1,22 +1,26 @@
 <?xml version="1.0"?>
 
 <launch>
-
+    <rosparam param="/marker_publisher/marker_list"> [11, 12, 13, 15] </rosparam>
+    
    <!-- <include file="$(find robot_urdf)/launch/gazebo4.launch"/> -->
     <include file="$(find assignment2_exprob)/launch/sim_aruco2.launch"></include>
+    
     <node name="go_to_point" pkg="motion_plan" type="go_to_point_action.py" respawn="false" />  
     
       
-<!--    
-    <node pkg="aruco_ros" type="marker_publisher" name="aruco_marker_publisher" output="screen" launch-prefix="xterm -e">
+   <node pkg="aruco_ros" type="marker_publisher" name="aruco_marker_publisher" output="screen" launch-prefix="xterm -e">
         <remap from="/image" to="/camera/color/image_raw"/>
     </node>
-  
+    
     <node pkg="image_view" type="image_view" name="image_view" output="screen">
         <remap from="image" to="/aruco_marker_publisher/result"/>
         <param name="autosize" value="true"/>
     </node>
--->
+   
+  
+    
+
 
 
     <!-- arguments -->
