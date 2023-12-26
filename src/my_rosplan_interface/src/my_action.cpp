@@ -6,6 +6,10 @@
 #include <motion_plan/PlanningAction.h>
 
 #include <geometry_msgs/Twist.h>
+#include <std_msgs/Int32.h>
+#include <geometry_msgs/Point.h>
+
+
 
 
 namespace KCL_rosplan {
@@ -13,7 +17,28 @@ namespace KCL_rosplan {
     MyActionInterface::MyActionInterface(ros::NodeHandle &nh) : nh_(nh) {
         // Creazione del publisher cmd_vel
         cmd_vel_pub_ = nh_.advertise<geometry_msgs::Twist>("/cmd_vel", 10);
+        id_subscriber_ = nh_.subscribe("/id_publisher", 10, &MyActionInterface::idCallback, this);
+        marker_point_subscriber_ = nh_.subscribe("/marker_point", 10, &MyActionInterface::markerPointCallback, this);
+        
+        marker_center_x = 0.0;
+        marker_id = 0;
+        width_camera = 320.0;
+        flag = true;
+        error = 0.0;
+        pixel_thr = 18.0;
+
     }
+    
+    void MyActionInterface::idCallback(const std_msgs::Int32::ConstPtr& msg) {
+        marker_id = msg->data;
+       // ROS_INFO("Ricevuto ID marker: %d", marker_id);
+    }
+    
+    void MyActionInterface::markerPointCallback(const geometry_msgs::Point::ConstPtr& msg) {
+        marker_center_x = msg->x;
+        ROS_INFO("Ricevuto punto marker: x = %f", marker_center_x);
+    }
+    
 
     bool MyActionInterface::concreteCallback(const rosplan_dispatch_msgs::ActionDispatch::ConstPtr& msg) { // concreteCallback deve avere lo stesso nome in my_action.h
         // here the implementation of the action
@@ -22,11 +47,25 @@ namespace KCL_rosplan {
         if (msg->name == "rotate") {         
             std::cout << "STIAMO FACENDO LA ROTAZIONE ";  
             
-            geometry_msgs::Twist twist;
-            twist.angular.z = 0.5; // Imposta la velocità angolare desiderata
-            cmd_vel_pub_.publish(twist);
             
-            sleep(10);
+            while (flag) {
+          
+                error = std::abs(marker_center_x - width_camera);
+                geometry_msgs::Twist twist;
+                twist.angular.z = 0.4; // Imposta la velocità angolare desiderata
+                cmd_vel_pub_.publish(twist);
+                
+                 // Controlla se l'errore è sotto la soglia
+                if (error < pixel_thr) {
+                    flag = false;  // Imposta la flag su false per uscire dal ciclo
+                    std::cout << "Errore sotto la soglia, uscita dal ciclo di rotazione\n";
+                    twist.angular.z = 0.0; // Imposta la velocità angolare desiderata
+                    cmd_vel_pub_.publish(twist);
+                }
+            }
+            
+            flag = true;
+            sleep(0.5);
 
         } 
         
@@ -47,8 +86,8 @@ namespace KCL_rosplan {
             }  
              
             else if (msg->parameters[2].value == "wp2"){
-                 goal.target_pose.pose.position.x = 6.1;
-                 goal.target_pose.pose.position.y = -5.8;
+                 goal.target_pose.pose.position.x = 7.0; //6.1;
+                 goal.target_pose.pose.position.y = -5.0;//-5.8;
                  goal.target_pose.pose.orientation.w = 0.0;
             } 
             
@@ -66,6 +105,8 @@ namespace KCL_rosplan {
             
             ac.sendGoal(goal); 
             ac.waitForResult();
+            
+            
 
 
         }
