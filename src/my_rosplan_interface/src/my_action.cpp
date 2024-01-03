@@ -1,6 +1,7 @@
 #include "my_rosplan_interface/my_action.h"
 #include <unistd.h>
-// add the following three include
+
+#include <move_base_msgs/MoveBaseAction.h>
 #include <actionlib/client/simple_action_client.h> 
 #include <actionlib/client/terminal_state.h> 
 #include <motion_plan/PlanningAction.h>
@@ -69,38 +70,53 @@ namespace KCL_rosplan {
 
         } 
         
-        else if (msg->name == "goto_waypoint") {         
-            std::cout << "GOING... ";  
+        else if (msg->name == "goto_waypoint" or msg->name == "come_back") {         
+            
+            if (msg->name == "come_back") {
+                std::cout << "Going back to initial position... "; 
+            }
+            else {
+                std::cout << "Going to goal position... ";
+            }
+            
+       
             
             
-            actionlib::SimpleActionClient<motion_plan::PlanningAction> ac("reaching_goal", true); 
-            motion_plan::PlanningGoal goal;
+            actionlib::SimpleActionClient<move_base_msgs::MoveBaseAction> ac("move_base", true); 
+            move_base_msgs::MoveBaseGoal goal;
             ac.waitForServer();
             
-            
+            goal.target_pose.header.frame_id = "map";
+            goal.target_pose.pose.orientation.w = 1.0;
             
             if(msg->parameters[2].value == "wp1"){ 
-                goal.target_pose.pose.position.x = 5.5;
-                goal.target_pose.pose.position.y = 1.5;
-                goal.target_pose.pose.orientation.w = 0.0;
+                goal.target_pose.pose.position.x = 5.5;//5.5;
+                goal.target_pose.pose.position.y = 1.5;//1.5;
+                
             }  
              
             else if (msg->parameters[2].value == "wp2"){
-                 goal.target_pose.pose.position.x = 7.0; //6.1;
+                 goal.target_pose.pose.position.x = 6.0; //6.1;
                  goal.target_pose.pose.position.y = -5.0;//-5.8;
-                 goal.target_pose.pose.orientation.w = 0.0;
+                 
             } 
             
             else if (msg->parameters[2].value == "wp3"){
                  goal.target_pose.pose.position.x = -3.0;
                  goal.target_pose.pose.position.y = -7.0;
-                 goal.target_pose.pose.orientation.w = 0.0;
+                
             } 
             
             else if (msg->parameters[2].value == "wp4"){
                  goal.target_pose.pose.position.x = -7.0;
                  goal.target_pose.pose.position.y = 2.0;
-                 goal.target_pose.pose.orientation.w = 0.0;
+                 
+            } 
+            
+            else if (msg->parameters[2].value == "wp0"){
+                 goal.target_pose.pose.position.x = 0.0;
+                 goal.target_pose.pose.position.y = 1.0;
+                 
             } 
             
             ac.sendGoal(goal); 
@@ -110,25 +126,7 @@ namespace KCL_rosplan {
 
 
         }
-        
-        else if (msg->name == "come_back") {         
-            std::cout << "Going back to initial position... "; 
-            
-            actionlib::SimpleActionClient<motion_plan::PlanningAction> ac("reaching_goal", true); 
-            motion_plan::PlanningGoal goal;
-            ac.waitForServer();
-            
-            goal.target_pose.pose.position.x = 0.0;
-            goal.target_pose.pose.position.y = 1.0;
-            goal.target_pose.pose.orientation.w = 0.0; 
-            
-            ac.sendGoal(goal); 
-            ac.waitForResult();    
-        }
-        
-        
-        
-        
+
 
         ROS_INFO("Action (%s) performed: completed!", msg->name.c_str());
         return true;
