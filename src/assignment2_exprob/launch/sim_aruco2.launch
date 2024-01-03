@@ -1,9 +1,6 @@
 <?xml version="1.0"?>
 <launch>
 
-
-  <include file="$(find rosbot_bringup)/launch/rosbot_gazebo.launch"></include>
-
 	  <!-- these are the arguments you can pass this launch file, for example paused:=true -->
   <arg name="paused" default="true"/>
   <arg name="use_sim_time" default="true"/>
@@ -47,6 +44,11 @@
   <group if="$(arg gui)">
     <node name="gazebo_gui" pkg="gazebo_ros" type="gzclient" respawn="false" output="screen"/>
   </group>
+  
+  <include file="$(find rosbot_bringup)/launch/rosbot_gazebo.launch"></include>
+
+  <param name="use_gui" value="False"/>
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find planning)/config/sim.rviz" />
 	
 
 </launch>
