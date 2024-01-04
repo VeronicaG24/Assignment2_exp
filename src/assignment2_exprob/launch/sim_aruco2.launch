@@ -57,7 +57,9 @@
   <node name="rviz" pkg="rviz" type="rviz" args="-d $(find rosbot_description)/rviz/rosbot.rviz" required="true" output="screen"/>
   
   <!-- Gmapping launch -->
-  <include file="$(find rosbot_bringup)/launch/gmapping.launch"></include>
+  <!-- <include file="$(find rosbot_bringup)/launch/gmapping.launch"></include> -->
+  <include file="$(find planning)/launch/gmapping.launch"></include>
+  <include file="$(find planning)/launch/move_base.launch"></include>
   
   
 	

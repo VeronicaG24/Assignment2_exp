@@ -79,9 +79,6 @@ namespace KCL_rosplan {
                 std::cout << "Going to goal position... ";
             }
             
-       
-            
-            
             actionlib::SimpleActionClient<move_base_msgs::MoveBaseAction> ac("move_base", true); 
             move_base_msgs::MoveBaseGoal goal;
             ac.waitForServer();
