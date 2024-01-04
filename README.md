@@ -8,19 +8,20 @@ Second assignment of Experimental robotics
 Requirements
 ----------------------
 
-The purpose of the second assignment of Experimental robotics is to implement the control of a robot in **ROS** (as done in the first assignment), adding plan actions for reaching the markers thanks to **ROSplan** and implementing one of the possible SLAM algorithm for avoiding obstacles and creating a local map of the environment.
+The purpose of the second assignment of Experimental robotics is to let the robot reaching the markers using planned actions thanks to [ROSplan](https://kcl-planning.github.io/ROSPlan/). In addition the robot needs to avoide obstacles, and building the local map thanks to one of the possible [SLAM](https://github.com/CarmineD8/SLAM_packages) algorithm.
 
 As in the first assignment, the implementation must be done first in simulation (the world file assignment2.world is given), then with the real **Rosbot**.
 
-The mobile robot, which is endowed with a camera, has to:
-* find all markers in the environment
-* go back to the initial position
+To summarize, the mobile robot endowed with a camera has to:
+* find the four markers in the environment;
+* go back to the initial position;
 
 Knowing that:
-* marker 11 is visible from the position x = 6.0, y = 2.0
-* marker 12 is visible from the position x = 7.0, y = -5.0
-* marker 13 is visible from the position x = -3.0, y = -8.0
-* marker 15 is visible from the position x = -7.0, y = -1.5
+* marker 11 is visible from the position x = 6.0, y = 2.0;
+* marker 12 is visible from the position x = 7.0, y = -5.0;
+* marker 13 is visible from the position x = -3.0, y = -8.0;
+* marker 15 is visible from the position x = -7.0, y = -1.5;
+* initial position is x = 0.0 and y = 1.0;
 
 
 Implementation
@@ -29,11 +30,12 @@ Implementation
 This is a possible implementation of the second assignment of Experimental for Robotics course. <br>
 *For further information about the first assignment see the repository at this link:* https://github.com/VeronicaG24/Assignment1_Exp 
 
-The robot with fixed camera, thanks to the planning of actions, reaches the designated position where the marker is visible, given in coordinates x and y, and starts to rotate to find the correct orientation with which the center of the camera aligns with that of the marker.
+The robot with fixed camera, thanks to the planning of actions, reaches the designated position where the marker is visible, and starts to rotate in order to find the correct orientation with which the center of the camera aligns with that of the marker. Once the detection of all the markers has been done, the robot has to come back to the initial position.
 
-To implement the actions of the robot explained before, we had to work, respectively on the following files:
+To implement the actions explained before, we had to work respectively on the following files:
 * `domain.pddl`, inside `ROS_planning_system` folder of `ROS_plan` package: <br>
-    - we define the actions *rotate*, *goto_waypoint*, and *come_back*. 
+    - *Functions* are introduced to count the number of visited waypoints. *Predicates* include conditions like a robot being at a waypoint, a waypoint being visited, or the robot's ability to rotate or move. *Actions* defined include 'rotate', where a robot rotates to find a waypoint, 'goto_waypoint', where the robot moves to a waypoint avoiding terrain, and 'come_back', where the robot returns to the initial position after visiting a certain number of waypoints.
+
 * `problem.pddl`, inside `ROS_planning_system` folder of `ROS_plan` package: <br>
     - we define the goal of the planning to let the robot accomplish the requirements of finding all markers (waypoints) in the environment and going back to the initial position.
 * To let the pddl action interact with the robot it is necessary to modify the file `my_action.cpp`, inside `my_rosplan_interface` folder. <br>
