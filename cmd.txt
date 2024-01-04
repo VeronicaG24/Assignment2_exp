@@ -1,0 +1,52 @@
+# prima di tutto lancio questo
+1. roslaunch rosplan_planning_system test.launch 
+# in un altri terminale lancio
+2. rosservice list #[the domain srv is about the general information, the state is about the problem]
+# per accedere ad un srv:
+3. rosservice call /nomesrv --> ESEMPIO: rosservice call /rosplan_knowledge_base/domain/types [it prints all the types that are present in our domain] 
+oppure --> rosservice call /rosplan_knowledge_base/domain/operators
+
+rosservice call /rosplan_knowledge_base/state/instances "type_name: 'waypoint'"
+
+#per generare il problem:
+4. rosservice call /rosplan_problem_interface/problem_generation_server --> This because the problem interface works on request -----------1-------------
+poi:
+5. rostopic echo /rosplan_problem_interface/problem_instance -p
+
+# successivamente devo generare il plan:
+6. rosservice call /rosplan_planner_interface/planning_server ---> #(ovviamente prima bisogna fare la richiesta per generare il problem: punto 4)---------2----------
+--> dovrebbe dirmi "plan was solved" nel terminale dove ho lanciato il file launch
+
+#per stampare l'output del plan
+7. rostopic echo /rosplan_planner_interface/planner_output -p
+---> Esempio di cosa stampa:
+%time,field.data
+1701806305506837606,0.000: (undock kenny wp0)  [10.000]
+10.001: (localise kenny)  [60.000]
+70.002: (goto_waypoint kenny wp0 wp1)  [60.000]
+130.003: (goto_waypoint kenny wp1 wp2)  [60.000]
+190.004: (goto_waypoint kenny wp2 wp3)  [60.000]
+250.005: (goto_waypoint kenny wp3 wp4)  [60.000]
+310.006: (goto_waypoint kenny wp4 wp0)  [60.000]
+370.007: (dock kenny wp0)  [30.000]
+
+# Succedssivamente devo fare il parse del plan:
+8. rosservice call /rosplan_parsing_interface/parse_plan -----------3---------
+# On the topic /rosplan_parsing_interface/complete_plan you will have the plan in the form of a ROS Message of type: /ActionDispatch
+9. rostopic echo /rosplan_parsing_interface/complete_plan
+
+# Poi dobbiamo chiamare il dispatch:
+10. rosservice call /rosplan_plan_dispatcher/dispatch_plan ---------4--------- (controllare file dispatch.txt per vedere cosa stampa con la simulazione)
+# We can check that the first action has been dispatched, on the topic:
+11. rostopic echo rosplan_plan_dispatcher/action_dispatch
+------------------------------
+# SLAM
+# lanciamo file launch:
+1. roslaunch planning bug1.launch 
+---> Poi su rviz andare in "add" in basso a sinistra, poi click su topic e poi Laser.
+
+# Oppure:
+1. roslaunch planning mb2.launch
+---> Rviz: topic --> attiva: global_plan, local_plan, map, costmap
+
+--> to kill all the gzserver and gzclient processing in the background
