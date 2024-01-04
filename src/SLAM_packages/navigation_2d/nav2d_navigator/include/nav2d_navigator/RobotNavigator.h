@@ -89,6 +89,7 @@ private:
 	GridMap mCurrentMap;
 	double* mCurrentPlan;
 
+	double mFrequency;
 	double mInflationRadius;
 	double mRobotRadius;
 	unsigned int mCellInflationRadius;
@@ -97,6 +98,7 @@ private:
 	signed char mCostObstacle;
 	signed char mCostLethal;
 
+	double mCommandTargetDistance;
 	double mNavigationGoalDistance;
 	double mNavigationGoalAngle;
 	double mNavigationHomingDistance;
