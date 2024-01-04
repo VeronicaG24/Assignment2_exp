@@ -66,7 +66,7 @@ namespace KCL_rosplan {
             }
             
             flag = true;
-            sleep(0.5);
+           // sleep(0.5);
 
         } 
         
@@ -88,25 +88,25 @@ namespace KCL_rosplan {
             
             if(msg->parameters[2].value == "wp1"){ 
                 goal.target_pose.pose.position.x = 5.5;//5.5;
-                goal.target_pose.pose.position.y = 1.5;//1.5;
+                goal.target_pose.pose.position.y = 2.5;//1.5;
                 
             }  
              
             else if (msg->parameters[2].value == "wp2"){
-                 goal.target_pose.pose.position.x = 6.0; //6.1;
+                 goal.target_pose.pose.position.x = 7.0; //6.1;
                  goal.target_pose.pose.position.y = -5.0;//-5.8;
                  
             } 
             
             else if (msg->parameters[2].value == "wp3"){
                  goal.target_pose.pose.position.x = -3.0;
-                 goal.target_pose.pose.position.y = -7.0;
+                 goal.target_pose.pose.position.y = -8.0;
                 
             } 
             
             else if (msg->parameters[2].value == "wp4"){
                  goal.target_pose.pose.position.x = -7.0;
-                 goal.target_pose.pose.position.y = 2.0;
+                 goal.target_pose.pose.position.y = 1.0;
                  
             } 
             
