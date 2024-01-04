@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /root/ros_ws/src/Assignment2_exp/install/setup.sh
