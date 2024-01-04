@@ -28,21 +28,21 @@ Implementation
 ----------------------
 
 This is a possible implementation of the second assignment of Experimental for Robotics course. <br>
-*For further information about the first assignment see the repository at this link:* https://github.com/VeronicaG24/Assignment1_Exp 
 
-The robot with fixed camera, thanks to the planning of actions, reaches the designated position where the marker is visible, and starts to rotate in order to find the correct orientation with which the center of the camera aligns with that of the marker. Once the detection of all the markers has been done, the robot has to come back to the initial position.
+The robot with fixed camera, thanks to the planning of actions, reaches the designated position where the marker is visible, and starts to rotate in order to find the correct orientation with which the center of the camera aligns with that of the marker. Once the detection of all the markers has been done, the robot has to come back to the initial position.<br>
+NB: the recognition of the marker IDs has been done, as in the [first assignment of Experimental](https://github.com/VeronicaG24/Assignment1_Exp ), thanks to [ArUco](http://wiki.ros.org/aruco) and [OpenCV](http://wiki.ros.org/opencv_apps) libraries.
 
 To implement the actions explained before, we had to work respectively on the following files:
 * `domain.pddl`, inside `ROS_planning_system` folder of `ROS_plan` package: <br>
-    - *Functions* are introduced to count the number of visited waypoints. *Predicates* include conditions like a robot being at a waypoint, a waypoint being visited, or the robot's ability to rotate or move. *Actions* defined include 'rotate', where a robot rotates to find a waypoint, 'goto_waypoint', where the robot moves to a waypoint avoiding terrain, and 'come_back', where the robot returns to the initial position after visiting a certain number of waypoints.
+    - functions like *counter_value* is introduced to count the number of visited waypoints. Predicates include conditions like a robot being at a waypoint, named *robot_at*, a waypoint being visited, named *visited*, or the robot's ability to rotate, named *can_rotate*, or move, named *can_move* and *back_to*. Actions defined include *rotate*, where a robot rotates to find a waypoint, *goto_waypoint*, where the robot moves to a waypoint avoiding terrain, and *come_back*, where the robot returns to the initial position after visiting a certain number of waypoints.
 
 * `problem.pddl`, inside `ROS_planning_system` folder of `ROS_plan` package: <br>
-    - we define the goal of the planning to let the robot accomplish the requirements of finding all markers (waypoints) in the environment and going back to the initial position.
+    - it is defined a specific task for a robot named *kenny*. It includes objects like waypoints ( *wp0 to wp4*) and a counter, named *count*. It is important to underline that the initial position is considered as a waypoint ( wp0). The initial state sets the counter to zero, places Kenny at waypoint wp0, marks wp0 as visited, and confirms Kenny's ability to move. The goal is for Kenny to visit waypoints wp1 to wp4 and then return to the initial position. This setup outlines a navigation task for the robot, involving visiting multiple locations and returning to the starting point.
 * To let the pddl action interact with the robot it is necessary to modify the file `my_action.cpp`, inside `my_rosplan_interface` folder. <br>
 NB: The part related to action_client and action_server are already implemented into `rt2_packages`.
-    - In the *rotate* action we develop the linear control to rotate the robot and allign the center of the camera with the center of the marker.
+    - In the *rotate* action we develop a linear control to rotate the robot for alligning the center of the camera with the center of the marker.
     - In the *goto_waypoint* action we set the coordinates of the four markers and send them to the `reaching_goal` server.
-    - In the *come_back* action we set the coordinates of the initial position (0,1) and send it to the `reaching_goal` server.
+    - In the *come_back* action we set the coordinates of the initial position and send it to the `reaching_goal` server.
 
 To generate the local map and to avoid the obstacles, we worked on the SLAM algorithm:
 * gmapping?? 
@@ -65,23 +65,25 @@ git clone https://github.com/VeronicaG24/Assignment2_Exp
 
 Make sure to execute the above command within the **src** folder of your workspace. Then execute ```catkin_make``` inside the root of your workspace for building our package. <br>
 
-To generate the planning, write this command in the terminal:
+To run the simulation, launch the following command from the terminal:
+
+```python
+roslaunch rosbot_bringup test.launch
+```
+Once the **Gazebo** window appears, you have to click on the simulation play button.<br> After that, regarding the planning part write this command in another terminal tab; beware to run the command inside **Assignment2_exp** folder:
 
 ```python
 ./command.sh
 ```
 
-After that, to run the simulation, launch the following command from the terminal:
-
-```python
-roslaunch rosbot_bringup test.launch
-```
 
 If everything works properly, you should visualize the **Gazebo** environment with the Rosbot and the markers, the **RViz** ti visualize the local map, a **xterm** terminal for showing the id of the marker, and the **/aruco_marker_publisher_result** which simply shows what the camera detects. 
 
 <img src="environment.png" alt="Drawing" style="width: 850px;"/> 
+<br>
+<td>Gazebo evironment</td>
 <table><tr>
-  <td> <img src="camera.png" alt="Drawing" style="width: 850px;"/> </td>
+  <td> <img src="rviz.png" alt="Drawing" style="width: 850px;"/> </td>
   <td> <img src="camera.png" alt="Drawing" style="width: 350px;"/> </td>
 </tr>
 <tr>
@@ -138,14 +140,14 @@ Define namespace KCL_rosplan:
 
 Simulation videos
 ----------------------
-You can see the video of the simulations: 
+You can see the video of the simulation: 
 
  <img source src="/video/camera_fixed.gif" alt="gif showing the behaviour of the Rosbot with fixed camera" width=800>
  
 
 Real robot video
 ----------------------
-You can observe the behavior of the real robot, **ROSbot 2**, which is similar to the simulatio but due to the limited space the markers cannot be exactly in the same positions. The video in the small box represents what the camera sees.
+You can observe the behavior of the real robot, **ROSbot 2**, which is similar to the simulation, but due to the limited space, the markers cannot be visible exactly in the same positions. The video in the small box represents what the camera sees.
 
 The code used can be found on the same repository but in the `real_robot` branch.
 
@@ -156,5 +158,5 @@ Possible improvements
 ----------------------
 Here are some possible improvements:
 
-* Although it has been possible to implement all the code related to the robot's actions in my_action.cpp file, a future implementation could aim at making the code more modular. To achieve this, custom services could be implemented that, when invoked, activate or deactivate certain behaviors of the robot
+* Although it has been possible to implement all the code related to the robot's actions in my_action.cpp file, a future implementation could aim at making the code more modular. To achieve this, custom services could be implemented that, when invoked, activate or deactivate certain behaviors of the robot;
 
