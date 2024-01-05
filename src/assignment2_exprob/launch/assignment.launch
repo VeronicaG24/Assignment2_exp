@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+
+<launch>
+   
+   <!-- Set the 'marker_list' parameter for the 'marker_publisher' with a list of marker IDs -->
+   <!-- Note: For our current goal, this line is not useful -->
+   <rosparam param="/marker_publisher/marker_list"> [11, 12, 13, 15] </rosparam>
+
+   <!-- Launch the Aruco marker detection node -->
+   <node pkg="aruco_ros" type="marker_publisher" name="aruco_marker_publisher" output="screen" launch-prefix="xterm -e">
+        <!-- Remap the image topic to the camera's color image raw data -->
+        <remap from="/image" to="/camera/color/image_raw"/>
+    </node>
+    
+    <!-- Launch a node for displaying the image from the robot's camera -->
+    <node pkg="image_view" type="image_view" name="image_view" output="screen">
+        <!-- Remap the image topic to the result published by the Aruco marker publisher -->
+        <remap from="image" to="/aruco_marker_publisher/result"/>
+        <!-- Set the 'autosize' parameter to automatically adjust the window size -->
+        <param name="autosize" value="true"/>
+    </node>
+    
+    <!-- Include the launch file for spawning the environment and the robot -->
+    <include file="$(find assignment2_exprob)/launch/sim_aruco2.launch"></include>
+    
+    <!-- Initialize the ROSPlan planner by including its launch file -->
+    <include file="$(find assignment2_exprob)/launch/planner.launch"></include>
+    
+    <!-- Launch RViz for visualization with a pre-configured RViz configuration file -->
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find rosbot_description)/rviz/rosbot.rviz" required="true" output="screen"/>
+      
+    <!-- Include the launch file for mapping the environment using gmapping -->
+    <include file="$(find planning)/launch/gmapping.launch"></include>
+    
+    <!-- Include the launch file to initialize move_base for navigation in the environment -->
+    <include file="$(find planning)/launch/move_base.launch"></include>
+ 
+</launch>
+

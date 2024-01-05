@@ -107,10 +107,10 @@ class ArucoMarkerPublisher {
 	    bool publishImage = image_pub_.getNumSubscribers() > 0;
 	    bool publishDebug = debug_pub_.getNumSubscribers() > 0;
 
-	    // Get marker detection list from the parameter server
+	   // Get marker detection list from the parameter server
 	    if (!nh_.getParam("/marker_publisher/marker_list", marker_detect)) {
 	      ROS_ERROR("Unable to get the parameter '/marker_publisher/marker_list'");
-	    }
+        }
 
 	    // Get the timestamp of the current image
 	    ros::Time curr_stamp = msg->header.stamp;
