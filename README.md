@@ -47,7 +47,48 @@ NB: The part related to action_client and action_server are already implemented 
 To generate the local map and to avoid the obstacles, we worked on the SLAM algorithm:
 * gmapping?? 
 
+SLAM and Autonomous Navigation
+----------------------
 
+In our project, we have implemented Simultaneous Localization And Mapping (SLAM) using the Filtering-based approach, specifically **Gmapping**, which is a variant of FastSLAM. This method is distinguished by its use of Rao-Blackwellized particle filters, where each particle in the filter represents a distinct hypothesis of the robot's path and carries an individual map of the environment. This approach falls under the category of filter-based methods, a classical technique in robotics, which systematically performs prediction and update steps. These steps are crucial for maintaining and updating the robot's knowledge about its environment and its own state within that environment.
+
+First of all, we need to install the **OpenSLAM GMapping** package. This can be done using the following command:
+```python
+sudo apt-get install ros-noetic-openslam-gmapping
+```
+
+
+We utilized the `gmapping` package, inside `SLAM_packages` folder which is specifically designed for SLAM with mobile robots. This package efficiently processes laser scan data to construct the map and estimate the robot's position. In fact, it subscribes essentially to the following topics:
+
+* The `/scan` topic, from which it receives laser scan data to create the map.
+
+* The `/tf` topic, which provides the necessary transformations to relate the frames for the base of the robot and its odometry. 
+
+On the other side, it publishes on the following topics:
+* The `/map` topic (published as a `nav_msgs/OccupancyGrid`), which contains the map data as a int8[] data. Data are expressed in row-major order. Occupancy probabilities are in the range [0, 100]. Unknown is -1.
+* The `/map_metadata` topic (as a `nav_msgs/MapMetaData`), which  contains basic information about the characteristics of the Occupancy Grid, for example the time at which the map was loaded, the map resolution, its width and height, the origin of the map
+
+To initiate the gmapping package, our launch file includes the following line of code:
+```python
+<include file="$(find planning)/launch/gmapping.launch"></include>
+``` 
+
+Moreover, in our project, we have implemented Autonomous Navigation, a critical functionality for robotic systems that enables them to navigate autonomously from a starting point to a goal position. This involves planning a collision-free path that may include several waypoints, while considering the robot's dynamics and avoiding static obstacles. Our implementation is based on the `MoveBase` package from the ROS Navigation stack, which offers the flexibility of choosing both global and local planners.
+
+First of all, we need to install the **MoveBase** package. This can be done using the following command (for Ubunto 20):
+```python
+sudo apt-get install ros-noetic-octomap-msgs ros-noetic-navigation ros-noetic-tf ros-noetic-move-base-msgs libsdl1.2-dev libsdl-image1.2-dev
+```
+
+
+For global path planning, we employ the default global planner provided by **MoveBase**, known as `navfn`. This planner utilizes **Dijkstras algorithm**, a proven method for finding the shortest path in a graph. In our context, it efficiently computes the path with the minimum cost from the starting point to the destination.
+
+As our local planner, we've chosen the `DWA Local Planner`. This planner is integral for real-time obstacle avoidance and dynamic navigation in changing environments. It relies heavily on the local costmap, which provides detailed information about nearby obstacles. This costmap is continually updated based on sensor inputs, allowing the robot to make informed decisions about its immediate surroundings.
+
+To initiate the move_base package, our launch file includes the following line of code:
+```python
+<include file="$(find planning)/launch/move_base.launch"></include>
+```
 
 Installing and running
 ----------------------
