@@ -242,7 +242,7 @@ Define namespace KCL_rosplan:
 
 Simulation videos
 ----------------------
-You can see the video of the simulation: 
+The video presented here demonstrates a portion of our project's functionality within a simulated environment (Gazebo): 
 
  <img source src="simulation_video.mp4" alt="video showing the bahaviour of a real Rosbot" width=800>
  
