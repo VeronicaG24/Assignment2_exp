@@ -79,7 +79,7 @@ The class is already responsible for various tasks such as subscribing and publi
 
 To achieve this, we started by creating a new package named `my_rosplan_interface` inside the `/Assignment2_exp/src/my_rosplan_interface/include` folder of this package, we add a header file called `my_action.h`. This header file defines a new class named *MyActionInterface*, which extends the *RPActionInterface* class. Following that, we proceed to write the code for `my_action.cpp` within the `/Assignment2_exp/src/my_rosplan_interface/src` folder of the package. 
 
-NB: Refer to the *Pseudocode Section* for a clearer understanding of what this node accomplishes.
+NB: Refer to the *Pseudocode Section* for a clearer understanding of what `my_action.cpp` accomplishes.
 
 SLAM and Autonomous Navigation
 ----------------------
