@@ -170,6 +170,7 @@ Once the *Gazebo* window is displayed, you should click on the simulation play b
 ```python
 ./command.sh
 ```
+This script automates the process of generating, planning, parsing, and executing a plan within a ROS environment using ROSPlan, by initiating a series of services.
 
 If everything is functioning correctly, you will be able to observe the *Gazebo* environment featuring the Rosbot and the markers. Additionally, you'll have *RViz* for visualizing the local map, an *xterm* terminal displaying the marker IDs, and the `/aruco_marker_publisher_result` providing insights into what the camera detects.
 
