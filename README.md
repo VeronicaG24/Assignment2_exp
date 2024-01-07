@@ -251,7 +251,7 @@ You can observe the behavior of the real robot, **ROSbot 2**, which is similar t
 
 The code used can be found on the same repository but in the `real_robot` branch.
 
- <img source src="/video/rosbot_bihaviour.gif" alt="gif showing the bahaviour of a real Rosbot" width=800>
+ <img source src="simulation_video.mp4" alt="video showing the bahaviour of a real Rosbot" width=800>
 
 
 Possible improvements
