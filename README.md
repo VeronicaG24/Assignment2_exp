@@ -178,13 +178,13 @@ If everything is functioning correctly, you will be able to observe the *Gazebo*
 
 <img src="environment.png" alt="Drawing" style="width: 850px;"/> 
 <br>
-<td>Gazebo evironment</td>
+<td>Simulated Environment (Gazebo)</td>
 <table><tr>
   <td> <img src="rviz.png" alt="Drawing" style="width: 850px;"/> </td>
   <td> <img src="camera.png" alt="Drawing" style="width: 350px;"/> </td>
 </tr>
 <tr>
-    <td>Rviz window</td>
+    <td>The Rviz window displays the map created through gmapping.</td>
    <td>/aruco_publisher_result window</td>
   </tr>
 </table>
