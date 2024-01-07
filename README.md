@@ -121,7 +121,7 @@ To initiate the move_base package, our launch file includes the following line o
 ```python
 <include file="$(find planning)/launch/move_base.launch"></include>
 ```
-The following image displays a segment of our project's implementation:
+The following images display a segment of our project's implementation:
 <table>
   <tr>
     <td>
