@@ -205,8 +205,8 @@ Define namespace KCL_rosplan:
     Define MyActionInterface class:
         Define Constructor MyActionInterface:
             Initialize node handle nh_
-            Initialize publisher on "/cmd_vel" for geometry_msgs::Twist
-            Initialize subscriber to "/marker_point" for geometry_msgs::Point
+            Initialize publisher on "/cmd_vel" topic for geometry_msgs of type Twist
+            Initialize subscriber to "/marker_point" topic for geometry_msgs of type Point
             Initialize variables:
               marker_center_x to 0.0
               width_camera to 320.0
