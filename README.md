@@ -44,8 +44,7 @@ NB: The part related to action_client and action_server are already implemented 
     - In the *goto_waypoint* action we set the coordinates of the four markers and send them to the `reaching_goal` server.
     - In the *come_back* action we set the coordinates of the initial position and send it to the `reaching_goal` server.
 
-To generate the local map and to avoid the obstacles, we worked on the SLAM algorithm:
-* gmapping?? 
+Regarding the generation of local map and obstacles avoidance, take a look on the next section. 
 
 SLAM and Autonomous Navigation
 ----------------------
