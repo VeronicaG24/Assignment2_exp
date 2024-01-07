@@ -141,7 +141,7 @@ The following images display a segment of our project's implementation:
 
 The images depict a visualization of a robot in a simulated environment, where the robot is using the Gmapping SLAM (Simultaneous Localization And Mapping) algorithm to construct a map of its surroundings. In this particular scenario, the white areas in the map reflect spaces that the robot has explored and identified, while the gray areas signify regions that are yet to be discovered or are outside the robot's mapping capabilities. The black lines represent physical barriers (walls) or obstacles (ArUco markers), that the robot has detected and included in its environmental map. The green line is the trajectory that the robot will attempt to follow, avoiding any obstacles it has identified in the process of mapping.
 
-NB: To achieve this, certain topics must be activated within the Rviz simulation.
+NB: To achieve this, certain topics must be activated manually within the Rviz simulation.
 
 Installing and running
 ----------------------
