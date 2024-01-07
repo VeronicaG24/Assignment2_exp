@@ -27,7 +27,7 @@ However, we were provided with certain clues regarding the marker's position. We
 * **Wp4**: Marker 15 is visible from the position x = -7.0, y = 1.0;
 * **Wp0**: Initial position is x = 0.0 and y = 1.0;
 
-NB: the recognition of the marker IDs has been done, as in the [first assignment of Experimental](https://github.com/VeronicaG24/Assignment1_Exp ), thanks to [ArUco](http://wiki.ros.org/aruco) and [OpenCV](http://wiki.ros.org/opencv_apps) libraries.
+NB: the recognition of the marker IDs has been done, as in the [first assignment of Experimental](https://github.com/VeronicaG24/Assignment1_Exp ), thanks to [ArUco](http://wiki.ros.org/aruco) and [OpenCV](http://wiki.ros.org/opencv_apps) libraries, Specifically, within the `Assignment2_exp/src/aruco_ros` directory.
 
 
 Planning Systems: ROSPlan
