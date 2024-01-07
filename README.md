@@ -242,7 +242,7 @@ Simulation videos
 ----------------------
 You can see the video of the simulation: 
 
- <img source src="/video/camera_fixed.gif" alt="gif showing the behaviour of the Rosbot with fixed camera" width=800>
+ <img source src="simulation_video.mp4" alt="video showing the bahaviour of a real Rosbot" width=800>
  
 
 Real robot video
@@ -251,7 +251,6 @@ You can observe the behavior of the real robot, **ROSbot 2**, which is similar t
 
 The code used can be found on the same repository but in the `real_robot` branch.
 
- <img source src="simulation_video.mp4" alt="video showing the bahaviour of a real Rosbot" width=800>
 
 
 Possible improvements
