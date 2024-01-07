@@ -7,44 +7,27 @@ Second assignment of Experimental robotics
 
 Requirements
 ----------------------
+In our project, within a particular environment featuring four markers identified by the IDs 11, 12, 13, and 15, we aim to achieve the following tasks using a mobile robot equipped with a camera:
 
-The purpose of the second assignment of Experimental robotics is to let the robot reaching the markers using planned actions thanks to [ROSplan](https://kcl-planning.github.io/ROSPlan/). In addition the robot needs building the local map thanks to one of the possible [SLAM](https://github.com/CarmineD8/SLAM_packages) algorithm, and avoiding obstalces thanks to one of **Autonomus navigation** algorithm.
+- **Marker Detection**: Locate and identify all the markers present within the environment.
 
-As in the first assignment, the implementation must be done first in simulation (the world file assignment2.world is given), then with the real **Rosbot**.
+- **Return to Initial Position**: After detecting and possibly interacting with the markers, the robot should autonomously return to its initial starting position.
 
-To summarize, the mobile robot endowed with a camera has to:
-* find the four markers in the environment;
-* go back to the initial position;
-* avoid the obstalces during the search of markers and build a local map;
+- **Obstacle Avoidance**: Ensure obstacle avoidance while searching for markers and construct a local map in the process.
 
-Knowing that:
-* marker 11 is visible from the position x = 5.5, y = 2.5;
-* marker 12 is visible from the position x = 7.0, y = -5.0;
-* marker 13 is visible from the position x = -3.3, y = -7.8;
-* marker 15 is visible from the position x = -7.0, y = 1.0;
-* initial position is x = 0.0 and y = 1.0;
+We will employ ROSPLAN as planning frameworks to devise and coordinate the robot's actions. Additionally, our system will utilize gmapping as the Simultaneous Localization and Mapping (SLAM) algorithm to map and determine the robot's position within the environment. Furthermore, the Move_base package will be employed for enabling autonomous navigation capabilities.
+
+As in the [first assignment](https://github.com/alemuraa/Experimental_Assigment_1), the implementation process should start within the simulation environment before transitioning to the actual [Rosbot](https://images.app.goo.gl/AJzwbr8L3Yijjmv9A) for real-world testing and execution.
 
 
-Implementation
-----------------------
+However, we were provided with certain clues regarding the marker's position. We were aware that:
+* **Wp1**: Marker 11 is visible from the position x = 5.5, y = 2.5;
+* **Wp2**: Marker 12 is visible from the position x = 7.0, y = -5.0;
+* **Wp3**: Marker 13 is visible from the position x = -3.3, y = -7.8;
+* **Wp4**: Marker 15 is visible from the position x = -7.0, y = 1.0;
+* **Wp0**: Initial position is x = 0.0 and y = 1.0;
 
-This is a possible implementation of the second assignment of Experimental for Robotics course. <br>
-
-The robot with fixed camera, thanks to the planning of actions, reaches the designated position where the marker is visible, and starts to rotate in order to find the correct orientation with which the center of the camera aligns with that of the marker. Once the detection of all the markers has been done, the robot has to come back to the initial position.<br>
 NB: the recognition of the marker IDs has been done, as in the [first assignment of Experimental](https://github.com/VeronicaG24/Assignment1_Exp ), thanks to [ArUco](http://wiki.ros.org/aruco) and [OpenCV](http://wiki.ros.org/opencv_apps) libraries.
-
-To implement the actions explained before, we had to work respectively on the following files:
-* `domain.pddl`, inside `ROS_planning_system` folder of `ROS_plan` package: <br>
-    - functions like *counter_value* is introduced to count the number of visited waypoints. Predicates include conditions like a robot being at a waypoint, named *robot_at*, a waypoint being visited, named *visited*, or the robot's ability to rotate, named *can_rotate*, or move, named *can_move* and *back_to*. Actions defined include *rotate*, where a robot rotates to find a waypoint, *goto_waypoint*, where the robot moves to a waypoint avoiding terrain, and *come_back*, where the robot returns to the initial position after visiting a certain number of waypoints.
-
-* `problem.pddl`, inside `ROS_planning_system` folder of `ROS_plan` package: <br>
-    - it is defined a specific task for a robot named *kenny*. It includes objects like waypoints ( *wp0 to wp4*) and a counter, named *count*. It is important to underline that the initial position is considered as a waypoint ( wp0). The initial state sets the counter to zero, places Kenny at waypoint wp0, marks wp0 as visited, and confirms Kenny's ability to move. The goal is for Kenny to visit waypoints wp1 to wp4 and then return to the initial position. This setup outlines a navigation task for the robot, involving visiting multiple locations and returning to the starting point.
-* To let the pddl action interact with the robot it is necessary to modify the file `my_action.cpp`, inside `my_rosplan_interface` folder. <br>
-NB: The part related to action_client and action_server are already implemented into `rt2_packages`.
-    - In the *rotate* action we develop a linear control to rotate the robot for alligning the center of the camera with the center of the marker.
-    - In the *goto_waypoint* action we set the coordinates of the four markers and send them to the `reaching_goal` server.
-    - In the *come_back* action we set the coordinates of the initial position and send it to the `reaching_goal` server.
-
 
 
 Planning Systems: ROSPlan
@@ -62,7 +45,6 @@ To start, we must install certain requirements, and this can be achieved by usin
 ```python
 sudo apt-get install flex bison freeglut3-dev libbdd-dev python3-catkin-tools ros-noetic-tf2-bullet
 ```
-- clone ROSPlan on your workspace.
 
 To achieve our objective, we have created a launch file named `planner.launch`, inside `/Assignment2_exp/src/assignment2_exprob/launch` that configures and initiates all the essential components required to execute planning and action execution for the robot using the ROSPlan framework.
 
@@ -75,13 +57,32 @@ To generate the executable plan, we worked on creating instances of `domain.pddl
 
 Here a descriprion of our domain instance: 
 
-Initially, the robot uses the 'goto_waypoint' action to navigate to a position from which it can see the marker. This action is used to reach a location where the marker becomes visible to the robot's camera.  Once the robot reaches the position where the marker is visible, it begins to use the 'rotate' action. This action makes the robot rotate until it detects the marker centered in its camera view. The robot continues to rotate until the marker is properly aligned. After successfully aligning with the first marker, the robot uses the 'goto_waypoint' action again to navigate to the next marker's location. It repeats the process of rotating and aligning itself with the new marker as needed. These steps are repeated for each subsequent marker until all markers have been visited and centered in the camera view. Once the robot has visited all the markers and the waypoint counter reaches 4 (indicating that all waypoints have been visited), the 'come_back' action is activated. This action directs the robot to return to its initial position, effectively completing the mission or task.
+Initially, the robot uses the `goto_waypoint` action to navigate to a position from which it can see the marker. This action is used to reach a location where the marker becomes visible to the robot's camera.  Once the robot reaches the position where the marker is visible, it begins to use the `rotate` action. This action makes the robot rotate until it detects the marker centered in its camera view. The robot continues to rotate until the marker is properly aligned. After successfully aligning with the first marker, the robot uses the 'goto_waypoint' action again to navigate to the next marker's location. It repeats the process of rotating and aligning itself with the new marker as needed. These steps are repeated for each subsequent marker until all markers have been visited and centered in the camera view. Once the robot has visited all the markers and the waypoint counter reaches 4 (indicating that all waypoints have been visited), the `come_back` action is activated. This action directs the robot to return to its initial position, effectively completing the mission or task.
 
+Action Interface
+----------------------
+Our aim is to seamlessly integrate everything into our real or simulated system. The most straightforward approach is to develop nodes that extend the Action Interface node. This class facilitates the following procedure:
+
+1. If the action name matches:
+   - Verify the action for any improperly formatted parameters.
+   - Update the knowledge base with initial effects.
+   - Publish that the action is enabled.
+
+2. If the action is successful (indicated by a callback):
+   - Update the knowledge base with final effects.
+   - Publish that the action has been achieved.
+
+3. If the action is not successful:
+   - Publish that the action has failed.
+   
+The class is already responsible for various tasks such as subscribing and publishing to the action dispatch topics, retrieving operator details to verify parameters, conditions, and effects, and updating the knowledge base with action outcomes.
+
+To achieve this, we started by creating a new package named `my_rosplan_interface` inside the `/Assignment2_exp/src/my_rosplan_interface/include` folder of this package, we add a header file called `my_action.h`. This header file defines a new class named *MyActionInterface*,' which extends the *RPActionInterface* class. Following that, we proceed to write the code for `my_action.cpp` within the `/Assignment2_exp/src/my_rosplan_interface/src` folder of the package.
 
 SLAM and Autonomous Navigation
 ----------------------
 
-In our project, we have implemented Simultaneous Localization And Mapping (SLAM) using the Filtering-based approach, specifically **Gmapping**, which is a variant of FastSLAM. This method is distinguished by its use of Rao-Blackwellized particle filters, where each particle in the filter represents a distinct hypothesis of the robot's path and carries an individual map of the environment. This approach falls under the category of filter-based methods, a classical technique in robotics, which systematically performs prediction and update steps. These steps are crucial for maintaining and updating the robot's knowledge about its environment and its own state within that environment.
+In our project, we have implemented Simultaneous Localization And Mapping (SLAM) using the Filtering-based approach, specifically `Gmapping`, which is a variant of FastSLAM. This method is distinguished by its use of Rao-Blackwellized particle filters, where each particle in the filter represents a distinct hypothesis of the robot's path and carries an individual map of the environment. This approach falls under the category of filter-based methods, a classical technique in robotics, which systematically performs prediction and update steps. These steps are crucial for maintaining and updating the robot's knowledge about its environment and its own state within that environment.
 
 First of all, we need to install the **OpenSLAM GMapping** package. This can be done using the following command:
 ```python
@@ -123,33 +124,35 @@ To initiate the move_base package, our launch file includes the following line o
 
 Installing and running
 ----------------------
-For start the whole program, you have to do some several, but fundamental, step. First of all it is important to have **ROS noetic** version on your pc; the best simple suggestion is to have the [**Docker**](https://docs.docker.com/get-docker/) and then follow this [**ROS guide**](http://wiki.ros.org/ROS/Installation). In addition it is required to install **xterm** terminal; you can do that by using the command on your terminal:
+To initiate the entire program, you need to complete several essential steps. Firstly, it's crucial to ensure that you have the *ROS noetic*  version installed on your computer. A straightforward recommendation is to install [**Docker**](https://docs.docker.com/get-docker/) and then follow the installation instructions provided in this [**ROS guide**](http://wiki.ros.org/ROS/Installation).
+
+Additionally, you will need to install the *xterm* terminal, which can be done by executing the following command in your terminal:
 
 ```python
 sudo apt-get install xterm
 ``` 
 
-You can clone our repository, by clicking on the terminal:
+You can clone our repository by executing the following command in your terminal:
 
 ```python
 git clone https://github.com/VeronicaG24/Assignment2_Exp
 ```
+Ensure that you run the provided command within the **src** folder of your workspace. Afterwards, execute the command ```catkin_make``` at the root of your workspace to build our package.
 
-Make sure to execute the above command within the **src** folder of your workspace. Then execute ```catkin_make``` inside the root of your workspace for building our package. <br>
-
-To run the simulation, launch the following command from the terminal:
+To initiate the simulation, we have prepared a main launch file. To execute it, please use the following command from your terminal:
 
 ```python
 roslaunch assignment2_exprob assignment.launch
 ```
-Once the **Gazebo** window appears, you have to click on the simulation play button.<br> After that, regarding the planning part write this command in another terminal tab; beware to run the command inside **Assignment2_exp** folder:
+This launch file also combines both the environment and robot spawning, as well as the ROSPlan planner launch configuration.
+
+Once the *Gazebo* window is displayed, you should click on the simulation play button. Following that, for the planning aspect, please enter the following command in a separate terminal tab, ensuring that you execute it within the `/Assignment2_exp` folder:
 
 ```python
 ./command.sh
 ```
 
-
-If everything works properly, you should visualize the **Gazebo** environment with the Rosbot and the markers, the **RViz** ti visualize the local map, a **xterm** terminal for showing the id of the marker, and the **/aruco_marker_publisher_result** which simply shows what the camera detects. 
+If everything is functioning correctly, you will be able to observe the *Gazebo* environment featuring the Rosbot and the markers. Additionally, you'll have *RViz* for visualizing the local map, an *xterm* terminal displaying the marker IDs, and the `/aruco_marker_publisher_result` providing insights into what the camera detects.
 
 <img src="environment.png" alt="Drawing" style="width: 850px;"/> 
 <br>
