@@ -8,14 +8,14 @@ Second assignment of Experimental robotics
 Requirements
 ----------------------
 
-The purpose of the second assignment of Experimental robotics is to let the robot reaching the markers using planned actions thanks to [ROSplan](https://kcl-planning.github.io/ROSPlan/). In addition the robot needs to avoide obstacles, and building the local map thanks to one of the possible [SLAM](https://github.com/CarmineD8/SLAM_packages) algorithm.
+The purpose of the second assignment of Experimental robotics is to let the robot reaching the markers using planned actions thanks to [ROSplan](https://kcl-planning.github.io/ROSPlan/). In addition the robot needs building the local map thanks to one of the possible [SLAM](https://github.com/CarmineD8/SLAM_packages) algorithm, and avoiding obstalces thanks to one of **Autonomus navigation** algorithm.
 
 As in the first assignment, the implementation must be done first in simulation (the world file assignment2.world is given), then with the real **Rosbot**.
 
 To summarize, the mobile robot endowed with a camera has to:
 * find the four markers in the environment;
 * go back to the initial position;
-* avoid the obstalces during the search of markers thanks to SLAM algorithm;
+* avoid the obstalces during the search of markers and build a local map;
 
 Knowing that:
 * marker 11 is visible from the position x = 5.5, y = 2.5;
@@ -205,4 +205,5 @@ Possible improvements
 Here are some possible improvements:
 
 * Although it has been possible to implement all the code related to the robot's actions in my_action.cpp file, a future implementation could aim at making the code more modular. To achieve this, three custom services could be implemented that, when invoked, activate or deactivate some robot behavior;
+* As seen in the simulation video, it takes about 15 minutes to complete the search for all four markers. This is obviously computationally inefficient; a solution might be to perform a performance analysis using other SLAM algorithms, such as **KartoSLAM**, which uses a graph-based approach for map creation, thus minimizing cumulative error, which could be important in complex environments. Additionally, the graph-based approach allows for better trajectory optimization compared to **GMapping**. Of course, whether there can be an actual improvement with **GMapping** in our environment, we can only know by implementing it and analyzing its computational complexity.
 
