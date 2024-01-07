@@ -57,7 +57,9 @@ To generate the executable plan, we worked on creating instances of `domain.pddl
 
 Here a descriprion of our domain instance: 
 
-Initially, the robot uses the `goto_waypoint` action to navigate to a position from which it can see the marker. This action is used to reach a location where the marker becomes visible to the robot's camera.  Once the robot reaches the position where the marker is visible, it begins to use the `rotate` action. This action makes the robot rotate until it detects the marker centered in its camera view. After successfully aligning with the first marker, the robot uses the `goto_waypoint` action again to navigate to the next marker's location. It repeats the process of rotating and aligning itself with the new marker as needed. These steps are repeated for each subsequent marker until all markers have been visited and centered in the camera view. Once the robot has visited all the markers and the waypoint counter reaches 4 (indicating that all waypoints have been visited), the `come_back` action is activated. This action directs the robot to return to its initial position, effectively completing our goal.
+Initially, the robot uses the `goto_waypoint` action to navigate to a position from which it can see the marker. This action is used to reach a location where the marker becomes visible to the robot's camera. Once the robot reaches the position where the marker is visible, it begins to use the `rotate` action. This action makes the robot rotate until it detects the marker centered in its camera view. <br>
+After successfully aligning with the first marker, the robot uses the `goto_waypoint` action again to navigate to the next marker's location. It repeats the process of rotating and aligning itself with the new marker as needed. <br>
+These steps are repeated for each subsequent marker until all markers have been visited and centered in the camera view. Once the robot has visited all the markers and the waypoint counter reaches 4 (indicating that all waypoints have been visited), the `come_back` action is activated. This action directs the robot to return to its initial position, effectively completing our goal.
 
 Action Interface
 ----------------------
@@ -84,13 +86,13 @@ NB: Refer to the *Pseudocode Section* for a clearer understanding of what `my_ac
 SLAM and Autonomous Navigation
 ----------------------
 
-In our project, we have implemented Simultaneous Localization And Mapping (SLAM) using the Filtering-based approach, specifically `Gmapping`, which is a variant of FastSLAM. This method is distinguished by its use of Rao-Blackwellized particle filters, where each particle in the filter represents a distinct hypothesis of the robot's path and carries an individual map of the environment. This approach falls under the category of filter-based methods, a classical technique in robotics, which systematically performs prediction and update steps. These steps are crucial for maintaining and updating the robot's knowledge about its environment and its own state within that environment.
+In our project, we have implemented Simultaneous Localization And Mapping (SLAM) using the Filtering-based approach, specifically `Gmapping`, which is a variant of FastSLAM. This method is distinguished by its use of Rao-Blackwellized particle filters, where each particle in the filter represents a distinct hypothesis of the robot's path and carries an individual map of the environment. This approach falls under the category of filter-based methods, a classical technique in robotics, which systematically performs prediction and update steps. <br>
+These steps are crucial for maintaining and updating the robot's knowledge about its environment and its own state within that environment.
 
 First of all, we need to install the *OpenSLAM GMapping* package. This can be done using the following command:
 ```python
 sudo apt-get install ros-noetic-openslam-gmapping
 ```
-
 
 We utilized the `gmapping` package, inside `SLAM_packages` folder which is specifically designed for SLAM with mobile robots. This package efficiently processes laser scan data to construct the map and estimate the robot's position. In fact, it subscribes essentially to the following topics:
 
@@ -204,11 +206,11 @@ Define namespace KCL_rosplan:
         Define Constructor MyActionInterface:
             Initialize node handle, publisher and subscriber
             Initialize variables:
-		marker_center_x=0.0
-		width_camera=320.0
-		flag=true
-		error=0.0
-		pixel_thr=18.0
+              marker_center_x to 0.0
+              width_camera to 320.0
+              flag to true
+              error to 0.0
+              pixel_thr to 18.0
 
         Define markerPointCallback function:
             Update marker_center_x with x-coordinate from the received Point message
@@ -252,8 +254,6 @@ Real robot video
 You can observe the behavior of the real robot, **ROSbot 2**, which is similar to the simulation, but due to the limited space, the markers cannot be visible exactly in the same positions. The video in the small box represents what the camera sees.
 
 The code used can be found on the same repository but in the `real_robot` branch.
-
-
 
 Possible improvements
 ----------------------
