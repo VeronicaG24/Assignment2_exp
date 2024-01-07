@@ -137,7 +137,7 @@ You can clone our repository by executing the following command in your terminal
 ```python
 git clone https://github.com/VeronicaG24/Assignment2_Exp
 ```
-Ensure that you run the provided command within the **src** folder of your workspace. Afterwards, execute the command ```catkin_make``` at the root of your workspace to build our package.
+Ensure that you run the provided command within the *src* folder of your workspace. Afterwards, execute the command ```catkin_make``` at the root of your workspace to build our package.
 
 To initiate the simulation, we have prepared a main launch file. To execute it, please use the following command from your terminal:
 
