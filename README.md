@@ -125,7 +125,7 @@ The following image displays a segment of our project's implementation:
 <table>
   <tr>
     <td>
-      <img src="map1.jpg" alt="Map 1" style="width: 4200px;"/>
+      <img src="map1.jpg" alt="Map 1" style="width: 420px;"/>
     </td>
     <td>
       <img src="map2.jpg" alt="Map 2" style="width: 420px;"/>
