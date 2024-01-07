@@ -15,12 +15,13 @@ As in the first assignment, the implementation must be done first in simulation 
 To summarize, the mobile robot endowed with a camera has to:
 * find the four markers in the environment;
 * go back to the initial position;
+* avoid the obstalces during the search of markers thanks to SLAM algorithm;
 
 Knowing that:
-* marker 11 is visible from the position x = 6.0, y = 2.0;
+* marker 11 is visible from the position x = 5.5, y = 2.5;
 * marker 12 is visible from the position x = 7.0, y = -5.0;
-* marker 13 is visible from the position x = -3.0, y = -8.0;
-* marker 15 is visible from the position x = -7.0, y = -1.5;
+* marker 13 is visible from the position x = -3.3, y = -7.8;
+* marker 15 is visible from the position x = -7.0, y = 1.0;
 * initial position is x = 0.0 and y = 1.0;
 
 
@@ -108,7 +109,7 @@ Make sure to execute the above command within the **src** folder of your workspa
 To run the simulation, launch the following command from the terminal:
 
 ```python
-roslaunch rosbot_bringup test.launch
+roslaunch assignment2_exprob assignment.launch
 ```
 Once the **Gazebo** window appears, you have to click on the simulation play button.<br> After that, regarding the planning part write this command in another terminal tab; beware to run the command inside **Assignment2_exp** folder:
 
@@ -198,5 +199,5 @@ Possible improvements
 ----------------------
 Here are some possible improvements:
 
-* Although it has been possible to implement all the code related to the robot's actions in my_action.cpp file, a future implementation could aim at making the code more modular. To achieve this, custom services could be implemented that, when invoked, activate or deactivate certain behaviors of the robot;
+* Although it has been possible to implement all the code related to the robot's actions in my_action.cpp file, a future implementation could aim at making the code more modular. To achieve this, three custom services could be implemented that, when invoked, activate or deactivate some robot behavior;
 
