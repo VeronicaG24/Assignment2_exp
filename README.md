@@ -204,7 +204,9 @@ Define namespace KCL_rosplan:
 
     Define MyActionInterface class:
         Define Constructor MyActionInterface:
-            Initialize node handle, publisher and subscriber
+            Initialize node handle nh_
+            Initialize publisher on "/cmd_vel" for geometry_msgs::Twist
+            Initialize subscriber to "/marker_point" for geometry_msgs::Point
             Initialize variables:
               marker_center_x to 0.0
               width_camera to 320.0
@@ -219,21 +221,37 @@ Define namespace KCL_rosplan:
         Define concreteCallback function for action execution:
             Handle 'rotate' action
             If msg.name is "rotate":
-                Loop until flag is false:
+                Loop until flag is true:
                     Calculate error as the absolute difference between marker_center_x and width_camera
                     Create and publish a Twist message to rotate the robot
                     Check if error is below the pixel_thr threshold:
-                        If so, stop rotation and exit loop
+                        If so, stop rotation
+                        Set the flag variable to false
+                        Publish a Twist message to stop rotation exit loop
+                Set the flag variable to true
 
             Handle 'goto_waypoint' and 'come_back' actions
             Else if msg.name is "goto_waypoint" or "come_back":
                 Log appropriate action message based on msg.name
                 Create and configure SimpleActionClient for move_base
+                Create the MoveBaseGoal object
                 Wait for action server to start
-                Define and send target position based on msg parameters
-                Wait for the goal to be achieved or aborted
+                Set the orientation of the goal target to 1.0
+                Check if the third parameter of msg is "wp1":
+                  If so, set target position coordinates for waypoint 1
+                Check else if the third parameter of msg is "wp2":
+                  If so, set target position coordinates for waypoint 2
+                Check else if the third parameter of msg is "wp3":
+                  If so, set target position coordinates for waypoint 3
+                Check else if the third parameter of msg is "wp4":
+                  If so, set target position coordinates for waypoint 4
+                Check else if the third parameter of msg is "wp0":
+                  If so, set target position coordinates for waypoint 0
+            
+            Wait for the goal to be achieved or aborted
 
             Log action completion message
+            Return a boolean true as returned value
 
     Define main function:
         Initialize ROS
