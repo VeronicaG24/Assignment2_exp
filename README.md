@@ -145,32 +145,37 @@ Include other necessary libraries
 Define namespace KCL_rosplan:
 
     Define MyActionInterface class:
-        define Constructor MyActionInterface:
-          Initialize node handle, publishers, and subscribers
-          Initialize variables like marker_center_x to 0.0, marker_id to 0, width_camera to 320.0, flag to true, error to 0.0,pixel_thr = 18.0
+        Define Constructor MyActionInterface:
+            Initialize node handle, publisher and subscriber
+            Initialize variables:
+		marker_center_x=0.0
+		width_camera=320.0
+		flag=true
+		error=0.0
+		pixel_thr=18.0
 
-        define Callback for ID updates:
-          Update marker_id with received message data
+        Define markerPointCallback function:
+            Update marker_center_x with x-coordinate from the received Point message
+            Log received marker point information
 
-        define Callback for marker point updates:
-          Update marker_center_x with received message data
-
-        define Main action callback:
+        Define concreteCallback function for action execution:
             Handle 'rotate' action
             If msg.name is "rotate":
                 Loop until flag is false:
-                    Calculate error
-                    Publish rotation command
-                    Check if error is below threshold, if so, exit loop
+                    Calculate error as the absolute difference between marker_center_x and width_camera
+                    Create and publish a Twist message to rotate the robot
+                    Check if error is below the pixel_thr threshold:
+                        If so, stop rotation and exit loop
 
             Handle 'goto_waypoint' and 'come_back' actions
             Else if msg.name is "goto_waypoint" or "come_back":
-                Create SimpleActionClient for move_base
-                Wait for server and set up goal
-                Determine target position based on msg parameters
-                Send goal and wait for result
+                Log appropriate action message based on msg.name
+                Create and configure SimpleActionClient for move_base
+                Wait for action server to start
+                Define and send target position based on msg parameters
+                Wait for the goal to be achieved or aborted
 
-            Log action completion
+            Log action completion message
 
     Define main function:
         Initialize ROS
