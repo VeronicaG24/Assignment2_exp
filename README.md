@@ -229,7 +229,6 @@ Define namespace KCL_rosplan:
                         Set the flag variable to false
                         Publish a Twist message to stop rotation exit loop
                 Set the flag variable to true
-
             Handle 'goto_waypoint' and 'come_back' actions
             Else if msg.name is "goto_waypoint" or "come_back":
                 Log appropriate action message based on msg.name
@@ -247,9 +246,7 @@ Define namespace KCL_rosplan:
                   If so, set target position coordinates for waypoint 4
                 Check else if the third parameter of msg is "wp0":
                   If so, set target position coordinates for waypoint 0
-            
             Wait for the goal to be achieved or aborted
-
             Log action completion message
             Return a boolean true as returned value
 
