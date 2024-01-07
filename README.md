@@ -121,20 +121,23 @@ To initiate the move_base package, our launch file includes the following line o
 ```python
 <include file="$(find planning)/launch/move_base.launch"></include>
 ```
-<table>
-  <tr>
-    <td>
-      <img src="map1.jpg" alt="Map 1" style="width: 350px;"/>
-    </td>
-    <td>
-      <img src="map2.jpg" alt="Map 2" style="width: 350px;"/>
-    </td>
-  </tr>
-  <tr>
-    <td>First Map View</td>
-    <td>Second Map View</td>
-  </tr>
-</table>
+<div style="text-align: center;">
+  <table style="margin: auto; display: block;">
+    <tr>
+      <td>
+        <img src="map1.jpg" alt="Map 1" style="width: 400px;"/>
+      </td>
+      <td>
+        <img src="map2.jpg" alt="Map 2" style="width: 400px;"/>
+      </td>
+    </tr>
+    <tr>
+      <td>First Map View</td>
+      <td>Second Map View</td>
+    </tr>
+  </table>
+</div>
+
 The image depicts a visualization of a robot in a simulated environment, where the robot is using the Gmapping SLAM (Simultaneous Localization And Mapping) algorithm to construct a map of its surroundings. In this particular scenario, the white areas in the map reflect spaces that the robot has explored and identified, while the gray areas signify regions that are yet to be discovered or are outside the robot's mapping capabilities. The black lines represent physical barriers (walls) or obstacles (ArUco markers), that the robot has detected and included in its environmental map. The green line is the trajectory that the robot will attempt to follow, avoiding any obstacles it has identified in the process of mapping.
 
 Installing and running
