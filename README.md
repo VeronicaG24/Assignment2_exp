@@ -109,7 +109,7 @@ To initiate the gmapping package, our launch file includes the following line of
 
 Moreover, in our project, we have implemented Autonomous Navigation, a critical functionality for robotic systems that enables them to navigate autonomously from a starting point to a goal position. This involves planning a collision-free path that may include several waypoints, while considering the robot's dynamics and avoiding static obstacles. Our implementation is based on the `MoveBase` package from the ROS Navigation stack, which offers the flexibility of choosing both global and local planners.
 
-First of all, we need to install the *MoveBase* package. This can be done using the following command (for Ubunto 20):
+First of all, we need to install the *MoveBase* package. This can be done using the following command (for Ubuntu 20):
 ```python
 sudo apt-get install ros-noetic-octomap-msgs ros-noetic-navigation ros-noetic-tf ros-noetic-move-base-msgs libsdl1.2-dev libsdl-image1.2-dev
 ```
