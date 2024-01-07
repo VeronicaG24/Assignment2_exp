@@ -45,7 +45,38 @@ NB: The part related to action_client and action_server are already implemented 
     - In the *goto_waypoint* action we set the coordinates of the four markers and send them to the `reaching_goal` server.
     - In the *come_back* action we set the coordinates of the initial position and send it to the `reaching_goal` server.
 
-Regarding the generation of local map and obstacles avoidance, take a look on the next section. 
+
+
+Planning Systems: ROSPlan
+-------------------------
+In our project, we have integrated the ROSPlan framework, a comprehensive suite of tools for AI Planning that seamlessly integrates with the ROS ecosystem. ROSPlan is designed to address a range of practical planning-related challenges in autonomous systems, such as problem generation, planning, and plan execution. The framework is composed of five main components:
+- The Knowledge Base
+- The Problem Interface
+- The PlannerInterface
+- The Parsing Integrace
+- The Plan Dispatch
+
+Each of these components is crucial for the seamless workflow of plan generation, execution, and communication within the system. Together, they enable autonomous systems to efficiently plan and execute tasks, making ROSPlan an indispensable tool for advanced robotic and autonomous applications.
+
+To start, we must install certain requirements, and this can be achieved by using the following command:
+```python
+sudo apt-get install flex bison freeglut3-dev libbdd-dev python3-catkin-tools ros-noetic-tf2-bullet
+```
+- clone ROSPlan on your workspace.
+
+To achieve our objective, we have created a launch file named `planner.launch`, inside `/Assignment2_exp/src/assignment2_exprob/launch` that configures and initiates all the essential components required to execute planning and action execution for the robot using the ROSPlan framework.
+
+To initiate the ROSPlan framework, our main launch file includes the following line of code:
+```python
+<include file="$(find assignment2_exprob)/launch/planner.launch"></include>
+```
+
+To generate the executable plan, we worked on creating instances of `domain.pddl` and `problem.pddl`, named respectively `domain_turtlebot.pddl` and `problem_turtlebot.pddl` inside `/ROSPlan/rosplan_planning_system/common`.
+
+Here a descriprion of our domain instance: 
+
+Initially, the robot uses the 'goto_waypoint' action to navigate to a position from which it can see the marker. This action is used to reach a location where the marker becomes visible to the robot's camera.  Once the robot reaches the position where the marker is visible, it begins to use the 'rotate' action. This action makes the robot rotate until it detects the marker centered in its camera view. The robot continues to rotate until the marker is properly aligned. After successfully aligning with the first marker, the robot uses the 'goto_waypoint' action again to navigate to the next marker's location. It repeats the process of rotating and aligning itself with the new marker as needed. These steps are repeated for each subsequent marker until all markers have been visited and centered in the camera view. Once the robot has visited all the markers and the waypoint counter reaches 4 (indicating that all waypoints have been visited), the 'come_back' action is activated. This action directs the robot to return to its initial position, effectively completing the mission or task.
+
 
 SLAM and Autonomous Navigation
 ----------------------
