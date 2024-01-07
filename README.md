@@ -77,7 +77,7 @@ Our aim is to seamlessly integrate everything into our real or simulated system.
    
 The class is already responsible for various tasks such as subscribing and publishing to the action dispatch topics, retrieving operator details to verify parameters, conditions, and effects, and updating the knowledge base with action outcomes.
 
-To achieve this, we started by creating a new package named `my_rosplan_interface` inside the `/Assignment2_exp/src/my_rosplan_interface/include` folder of this package, we add a header file called `my_action.h`. This header file defines a new class named *MyActionInterface*,' which extends the *RPActionInterface* class. Following that, we proceed to write the code for `my_action.cpp` within the `/Assignment2_exp/src/my_rosplan_interface/src` folder of the package.
+To achieve this, we started by creating a new package named `my_rosplan_interface` inside the `/Assignment2_exp/src/my_rosplan_interface/include` folder of this package, we add a header file called `my_action.h`. This header file defines a new class named *MyActionInterface*, which extends the *RPActionInterface* class. Following that, we proceed to write the code for `my_action.cpp` within the `/Assignment2_exp/src/my_rosplan_interface/src` folder of the package.
 
 SLAM and Autonomous Navigation
 ----------------------
