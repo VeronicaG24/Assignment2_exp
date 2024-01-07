@@ -1,0 +1,43 @@
+(Problem
+
+(ArgumentSymbols rover1 shuttle1 baseCamp1 baseCamp2 lander1
+  b1 b2 b3 landingSite1 b4 b5 b6 b7
+  sampleContainer1 sampleContainer2 sampleContainer3
+  sampleContainer4 sampleContainer5 sampleContainer6
+  payload1 batteryPayload1 batteryPayload2
+  filled empty charged discharged)
+
+(Instances BaseCamp baseCamp1 baseCamp2)
+
+(Instances SampleContainer sampleContainer1 sampleContainer sampleContainer3
+           sampleContainer4 sampleContainer5)
+(Instances Rover rover1)
+(Instances Shuttle shuttle1)
+(Instances Lander lander1)
+
+(Fluent f0 RobotAt(shuttle1 b1))
+(Constraint Release[0,0](f0))
+
+(Fluent f1 RobotAt(rover1 b1))
+(Constraint Release[0,0](f1))
+
+(Fluent f2 ContainerAt(sampleContainer1 shuttle1 filled))
+(Constraint Release[0,0](f2))
+
+(Fluent f3 ContainerAt(sampleContainer2 shuttle1 empty))
+(Constraint Release[0,0](f3))
+
+(Fluent f4 ContainerAt(sampleContainer3 shuttle1 empty))
+(Constraint Release[0,0](f4))
+
+(Fluent f5 ContainerAt(sampleContainer4 shuttle1 empty))
+(Constraint Release[0,0](f5))
+
+(Fluent f6 ContainerAt(sampleContainer5 shuttle1 empty))
+(Constraint Release[0,0](f6))
+
+
+(Task t1 transfer_empty_containers(shuttle1 rover1))
+(Constraint Release[0,INF](t1))
+
+)

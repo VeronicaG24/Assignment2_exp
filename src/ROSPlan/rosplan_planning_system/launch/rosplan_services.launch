@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+
+<launch>
+    <!-- Genera il problema -->
+    <node pkg="rosservice" type="rosservice" name="problem_generation" args="call /rosplan_problem_interface/problem_generation_server" />
+
+    <!-- Avvia la pianificazione -->
+    <node pkg="rosservice" type="rosservice" name="planning_server" args="call /rosplan_planner_interface/planning_server" />
+
+    <!-- Effettua il parsing del piano -->
+    <node pkg="rosservice" type="rosservice" name="parse_plan" args="call /rosplan_parsing_interface/parse_plan" />
+
+    <!-- Dispatcha il piano -->
+    <node pkg="rosservice" type="rosservice" name="dispatch_plan" args="call /rosplan_plan_dispatcher/dispatch_plan" />
+</launch>
+
