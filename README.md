@@ -117,7 +117,7 @@ sudo apt-get install ros-noetic-octomap-msgs ros-noetic-navigation ros-noetic-tf
 
 For global path planning, we employ the default global planner provided by *MoveBase*, known as `navfn`. This planner utilizes *Dijkstra's algorithm*, a proven method for finding the shortest path in a graph. In our context, it efficiently computes the path with the minimum cost from the starting point to the destination.
 
-As our local planner, we've chosen the `DWA Local Planner`. This planner is integral for real-time obstacle avoidance and dynamic navigation in changing environments. It relies heavily on the local costmap, which provides detailed information about nearby obstacles. This costmap is continually updated based on sensor inputs, allowing the robot to make informed decisions about its immediate surroundings.
+As our local planner, we used the default `DWA Local Planner`. This planner is integral for real-time obstacle avoidance and dynamic navigation in changing environments. It relies heavily on the local costmap, which provides detailed information about nearby obstacles. This costmap is continually updated based on sensor inputs, allowing the robot to make informed decisions about its immediate surroundings.
 
 To initiate the move_base package, our launch file includes the following line of code:
 ```python
