@@ -261,7 +261,8 @@ Simulation videos
 ----------------------
 The video presented here demonstrates a portion of our project's functionality within a simulated environment (Gazebo): 
 
- <img source src="simulation_video.mp4" alt="video showing the bahaviour of a real Rosbot" width=800>
+
+
  
 
 Real robot video
@@ -272,7 +273,7 @@ The code for this setup is available in the same repository, specifically under 
 
 Possible improvements
 ----------------------
-Here are some possible improvements:
+Here there are some possible improvements:
 
 * While the current implementation successfully consolidates all the robot action code within the my_action.cpp file, there is potential for improving modularity in future versions. This could be achieved by segregating the code associated with the two *if* statements into distinct functions. However, such a modification might introduce execution delays, particularly because the operations are presently executed within a callback. This aspect needs careful consideration to balance modularity with efficient execution.
 * The simulation video demonstrates that the current setup requires approximately 10 minutes to locate all four markers, highlighting a need for enhanced computational efficiency. A promising strategy could involve conducting a performance analysis with alternative SLAM algorithms, such as *KartoSLAM (GraphSLAM)*. KartoSLAM employs a graph-based methodology for map creation, effectively reducing cumulative errors, which is particularly beneficial in complex environments. Moreover, its graph-based approach surpasses GMapping in terms of trajectory optimization. To ascertain whether KartoSLAM offers a tangible improvement over GMapping in our specific environment, an empirical implementation and subsequent analysis of its computational complexity would be necessary.
