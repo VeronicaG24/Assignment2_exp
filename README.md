@@ -266,9 +266,9 @@ The video presented here demonstrates a portion of our project's functionality w
 
 Real robot video
 ----------------------
-You can observe the behavior of the real robot, **ROSbot 2**, which is similar to the simulation, but due to the limited space, the markers cannot be visible exactly in the same positions. The video in the small box represents what the camera sees.
+You can witness the behavior of the actual robot, ROSbot 2, which closely mirrors that in the simulation. However, due to spatial constraints, the markers may not be positioned identically as in the simulation. The inset video displays the robot's camera view.
 
-The code used can be found on the same repository but in the `real_robot` branch.
+The code for this setup is available in the same repository, specifically under the 'real_robot' branch. Additionally, we will soon add a video showcasing the behavior of the real robot for a more comprehensive understanding.
 
 Possible improvements
 ----------------------
