@@ -129,10 +129,10 @@ The following images display a segment of our project's implementation:
 <table>
   <tr>
     <td>
-      <img src="map1.jpg" alt="Map 1" style="width: 420px;"/>
+      <img src="images/map1.jpg" alt="Map 1" style="width: 420px;"/>
     </td>
     <td>
-      <img src="map2.jpg" alt="Map 2" style="width: 420px;"/>
+      <img src="images/map2.jpg" alt="Map 2" style="width: 420px;"/>
     </td>
   </tr>
   <tr>
@@ -178,12 +178,12 @@ This script automates the process of generating, planning, parsing, and executin
 
 If everything is functioning correctly, you will be able to observe the *Gazebo* environment featuring the Rosbot and the markers. Additionally, you'll have *RViz* for visualizing the local map, an *xterm* terminal displaying the marker IDs, and the `/aruco_marker_publisher_result` providing insights into what the camera detects.
 
-<img src="environment.png" alt="Drawing" style="width: 850px;"/> 
+<img src="images/environment.png" alt="Drawing" style="width: 850px;"/> 
 <br>
 <td>Simulated Environment (Gazebo)</td>
 <table><tr>
-  <td> <img src="rviz.png" alt="Drawing" style="width: 850px;"/> </td>
-  <td> <img src="camera.png" alt="Drawing" style="width: 350px;"/> </td>
+  <td> <img src="images/rviz.png" alt="Drawing" style="width: 850px;"/> </td>
+  <td> <img src="images/camera.png" alt="Drawing" style="width: 350px;"/> </td>
 </tr>
 <tr>
     <td>The Rviz window displays the map created through gmapping.</td>
