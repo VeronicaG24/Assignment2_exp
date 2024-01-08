@@ -260,6 +260,7 @@ Define namespace KCL_rosplan:
 Simulation videos
 ----------------------
 The video presented here demonstrates a portion of our project's functionality within a simulated environment (Gazebo): 
+<img src="videos/BassaQualità_velocizzato.gif" alt="Drawing" style="width: 850px;"/> 
 
 
 
