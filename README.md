@@ -35,8 +35,8 @@ Planning Systems: ROSPlan
 In our project, we have integrated the ROSPlan framework, a comprehensive suite of tools for AI Planning that seamlessly integrates with the ROS ecosystem. ROSPlan is designed to address a range of practical planning-related challenges in autonomous systems, such as problem generation, planning, and plan execution. The framework is composed of five main components:
 - The Knowledge Base
 - The Problem Interface
-- The PlannerInterface
-- The Parsing Integrace
+- The Planner Interface
+- The Parsing Interface
 - The Plan Dispatch
 
 Each of these components is crucial for the seamless workflow of plan generation, execution, and communication within the system. Together, they enable autonomous systems to efficiently plan and execute tasks, making ROSPlan an indispensable tool for advanced robotic and autonomous applications.
