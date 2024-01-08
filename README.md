@@ -169,7 +169,7 @@ roslaunch assignment2_exprob assignment.launch
 ```
 This launch file also combines both the environment and robot spawning, as well as the ROSPlan planner launch configuration.
 
-Once the *Gazebo* window is displayed, you should click on the simulation play button. Following that, for the planning aspect, please enter the following command in a separate terminal tab, ensuring that you execute it within the `/Assignment2_exp` folder:
+When the *Gazebo* window is displayed, proceed to the planning phase by opening a new terminal tab. In this tab, navigate to the `/Assignment2_exp` folder and execute the following command:
 
 ```python
 ./command.sh
@@ -276,4 +276,5 @@ Here are some possible improvements:
 
 * Although it has been possible to implement all the code related to the robot's actions in my_action.cpp file, a future implementation could aim at making the code more modular. To achieve this, it would be better to move the code related to the two *if statements* in the my_action.cpp file into separate functions; however, this could lead to delays during the code execution phase, since everything is executed within a callback.
 * As seen in the simulation video, it takes about 15 minutes to complete the search for all four markers. This is obviously computationally inefficient; a solution might be to perform a performance analysis using other SLAM algorithms, such as **KartoSLAM**, which uses a graph-based approach for map creation, thus minimizing cumulative error, which could be important in complex environments. Additionally, the graph-based approach allows for better trajectory optimization compared to **GMapping**. Of course, whether there can be an actual improvement with **GMapping** in our environment, we can only know by implementing it and analyzing its computational complexity.
+* An improvement to the current navigation system could involve the addition of a dedicated "environment exploration" phase prior to executing waypoint navigation. This phase would task the robot with methodically scanning the surroundings to construct a more complete and detailed map of the environment. By doing so, the robot would acquire a greater understanding of potential obstacles and free paths, which in turn would facilitate more optimal route planning. This strategy would likely decrease the chances of the robot needing to recalibrate its path mid-route due to encountering unforeseen obstacles. Consequently, this would improve the robot's overall efficiency in reaching its waypoints, as it would start with a more informed route plan.
 
