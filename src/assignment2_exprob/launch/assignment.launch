@@ -12,17 +12,6 @@
         <remap from="/image" to="/camera/color/image_raw"/>
     </node>
     
-    <!-- Launch a node for displaying the image from the robot's camera -->
-    <node pkg="image_view" type="image_view" name="image_view" output="screen">
-        <!-- Remap the image topic to the result published by the Aruco marker publisher -->
-        <remap from="image" to="/aruco_marker_publisher/result"/>
-        <!-- Set the 'autosize' parameter to automatically adjust the window size -->
-        <param name="autosize" value="true"/>
-    </node>
-    
-    <!-- Include the launch file for spawning the environment and the robot -->
-    <include file="$(find assignment2_exprob)/launch/sim_aruco2.launch"></include>
-    
     <!-- Initialize the ROSPlan planner by including its launch file -->
     <include file="$(find assignment2_exprob)/launch/planner.launch"></include>
     
